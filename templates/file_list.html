@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uploaded Files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .success-message {
+            text-align: center;
+            font-weight: bold;
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        .uploaded-files {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .uploaded-files ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .uploaded-files ul li {
+            margin-bottom: 10px;
+        }
+
+        .uploaded-files ul li .file-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .uploaded-files ul li .file-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .uploaded-files ul li .file-timestamp {
+            font-size: 0.8em;
+            color: #999;
+        }
+
+        .uploaded-files ul li a.button {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .uploaded-files ul li a.button:hover {
+            background-color: #2980b9;
+        }
+
+        .uploaded-files ul li a.file-link {
+            text-decoration: none;
+            color: #333;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Uploaded Files</h1>
+    {% if success_message %}
+        <div class="success-message">{{ success_message }}</div>
+    {% endif %}
+    <div class="uploaded-files">
+        <ul>
+            {% for file in uploaded_files %}
+                <li>
+                    <div class="file-info">
+                        <span class="file-number">{{ forloop.counter }}</span>
+                        <a href="{{ file.file.url }}" class="file-link">{{ file.file.name }}</a>
+                        <a href="{% url 'file_content' file_id=file.id %}" class="button">View Content</a>
+                    </div>
+                    <!-- <div class="file-timestamp">
+                        Uploaded at {{ file.uploaded_at }}
+                    </div> -->
+                </li>
+            {% empty %}
+                <li>No files uploaded yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
